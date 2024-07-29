@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Manage Cat Food</h1>
+
+<!-- Add Food Form -->
+<form method="POST" action="{{ url_for('add_food') }}">
+    <h2>Add Food</h2>
+    <label for="brand">Brand:</label>
+    <input type="text" id="brand" name="brand" required>
+    <label for="type">Type:</label>
+    <input type="text" id="type" name="type" required>
+    <label for="flavor">Flavor:</label>
+    <input type="text" id="flavor" name="flavor" required>
+    <label for="weight">Weight (oz):</label>
+    <input type="number" step="0.01" id="weight" name="weight" required>
+    <label for="calories">Calories:</label>
+    <input type="number" step="0.01" id="calories" name="calories" required>
+    <button type="submit" name="add_food">Add Food</button>
+</form>
+
+<!-- List of Foods -->
+<h2>Existing Foods</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Brand</th>
+            <th>Type</th>
+            <th>Flavor</th>
+            <th>Calories (per oz)</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for food in foods %}
+            <tr>
+                <td>{{ food[1] }}</td>
+                <td>{{ food[2] }}</td>
+                <td>{{ food[3] }}</td>
+                <td>{{ food[4] }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('delete_food') }}">
+                        <input type="hidden" name="food_id" value="{{ food[0] }}">
+                        <button type="submit" name="delete_food">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

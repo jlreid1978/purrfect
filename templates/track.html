@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Track Meal</h1>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul class="flashes">
+        {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+
+<form action="{{ url_for('track_meal') }}" method="post">
+    <label for="cat">Select Cat:</label>
+    <select id="cat" name="cat">
+        {% for cat in cat_names %}
+            <option value="{{ cat }}">{{ cat }}</option>
+        {% endfor %}
+    </select>
+    <br><br>
+    <label for="food">Select Food:</label>
+    <select id="food" name="food">
+        {% for food in foods %}
+            <option value="{{ food[0] }}">{{ food[1] }} - {{ food[2] }} - {{ food[3] }}</option>
+        {% endfor %}
+    </select>
+    <br><br>
+    <label for="weight">Weight (oz):</label>
+    <input type="number" id="weight" name="weight" step="0.1" min="0" required>
+    <br><br>
+    <button type="submit" name="track_meal">Track Meal</button>
+</form>
+<br>
+<a href="{{ url_for('manage_cat_food') }}">Manage Cat Food</a>
+<br>
+
+<form action="{{ url_for('change_date') }}" method="post">
+    <input type="hidden" name="selected_date" value="{{ selected_date }}">
+    <button type="submit" name="change_date" value="prev">Previous Day</button>
+    <button type="submit" name="change_date" value="next">Next Day</button>
+</form>
+
+<h2>Meals for {{ selected_date }}</h2>
+{% if cat_meals %}
+    {% for cat_name, meals in cat_meals.items() %}
+        <h3>{{ cat_name }}:</h3>
+        <table>
+            <tr>
+                <th>Time</th>
+                <th>Brand</th>
+                <th>Type</th>
+                <th>Flavor</th>
+                <th>Weight</th>
+                <th>Calories</th>
+                <th>Action</th> 
+            </tr>
+            {% for meal in meals %}
+                <tr>
+                    <td>{{ meal[4] }}</td>
+                    <td>{{ meal[1] }}</td>
+                    <td>{{ meal[2] }}</td>
+                    <td>{{ meal[3] }}</td>
+                    <td>{{ meal[5] }}</td>
+                    <td>{{ (meal[6] * meal[5] | float) | round(2) }}</td>
+                    <td>
+                        <form action="{{ url_for('delete_meal') }}" method="post" style="display:inline;">
+                            <input type="hidden" name="meal_id" value="{{ meal[7] }}">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <p>Total Weight: {{ cat_totals[cat_name]['total_weight'] }}</p>
+        <p>Total Calories: {{ (cat_totals[cat_name]['total_calories'] | float) | round(2) }}</p>
+    {% endfor %}
+{% else %}
+    <p>No meals tracked for this day.</p>
+{% endif %}
+{% endblock %}

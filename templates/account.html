@@ -1,0 +1,106 @@
+{% extends 'layout.html' %}
+
+{% block title %}Account Settings{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Account Settings</h2>
+    
+    <!-- Display User Information -->
+    <div class="user-info">
+        <p><strong>Name:</strong> {{ user_info.name }}</p>
+        <p><strong>Email:</strong> {{ user_info.email }}</p>
+        <p><strong>Username:</strong> {{ user_info.username }}</p>
+    </div>
+
+    <!-- Display User's Cats -->
+    {% if user_cats %}
+        <h4>Your Cats</h4>
+        <ul>
+            {% for cat in user_cats %}
+                {% if cat[0] %}
+                    {% for cat_name in cat[0].split(',') %}
+                        <li>{{ cat_name }}</li>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </ul>
+
+        <!-- Remove Cat Form -->
+        <form method="POST" action="/remove-cat">
+            <h4>Remove Cat</h4>
+            <div class="form-group">
+                <label for="cat_select">Select Cat to Remove:</label>
+                <select name="cat_name" id="cat_name">
+                    {% for cat in user_cats %}
+                        {% if cat[0] %}
+                            {% for cat_name in cat[0].split(',') %}
+                                <option value="{{ cat_name }}">{{ cat_name }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-danger">Remove Cat</button>
+            </div>
+        </form>
+    {% else %}
+        <p>No cats found.</p>
+    {% endif %}
+    
+    <!-- Add Cat Form -->
+    <form method="POST" action="/add-cat">
+        <h4>Add Cat</h4>
+        <div class="form-group">
+            <label for="cat_name">Cat Name:</label>
+            <input type="text" name="cat_name" id="cat_name" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Add Cat</button>
+        </div>
+    </form>
+
+    <!-- Update Email Form -->
+    <form method="POST" action="/update-email">
+        <h4>Update Email</h4>
+        {{ update_email_form.hidden_tag() }}
+        <div class="form-group">
+            {{ update_email_form.email.label(class="form-label") }}
+            <input type="email" name="email" id="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+            {{ update_email_form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+    
+    <!-- Change Password Form -->
+    <form method="POST" action="/change-password">
+        <h4>Change Password</h4>
+        {{ change_password_form.hidden_tag() }}
+        <div class="form-group">
+            {{ change_password_form.current_password.label(class="form-label") }}
+            {{ change_password_form.current_password(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ change_password_form.new_password.label(class="form-label") }}
+            {{ change_password_form.new_password(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ change_password_form.confirm_password.label(class="form-label") }}
+            {{ change_password_form.confirm_password(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ change_password_form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+    
+    <!-- Unregister Form -->
+    <form method="POST" action="/delete">
+        <h4>Unregister</h4>
+        <div class="form-group">
+            <button type="submit" class="btn btn-danger">Unregister</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

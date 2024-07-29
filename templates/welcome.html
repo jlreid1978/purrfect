@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+<div class="jumbotron text-center">
+    <h1 class="display-4">Welcome to Purrfect Calories!</h1>
+    <p class="lead">Track your cat's caloric intake with ease.</p>
+    <img src="{{ url_for('static', filename='cat.jpeg') }}" alt="Cat Image" class="img-fluid my-4" style="max-width: 300px;">
+    <hr class="my-4">
+    <p>Get started by adding your cat's meals and monitor their health.</p>
+</div>
+{% endblock %}

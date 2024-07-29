@@ -1,0 +1,58 @@
+body {
+    padding-top: 56px;
+    background-color: #f0f8ff; /* Alice blue background */
+    color: #333333; /* Darker text color for better readability */
+}
+
+.navbar {
+    background-color: #ffebcd; /* Blanched almond background for the navbar */
+}
+
+.nav-link {
+    color: #8a2be2 !important; /* Blue violet for links */
+}
+
+.nav-link:hover {
+    color: #551a8b !important; /* Darker blue violet on hover */
+}
+
+.jumbotron {
+    background-color: #ffe4e1; /* Misty rose background for the jumbotron */
+    color: #333333; /* Darker text color */
+}
+
+.jumbotron .display-4 {
+    color: #8b4513; /* Saddle brown for the main heading */
+}
+
+.jumbotron .lead {
+    color: #a0522d; /* Sienna for the lead paragraph */
+}
+.ml-auto {
+    margin-left: auto !important;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+form {
+    display: inline;
+}

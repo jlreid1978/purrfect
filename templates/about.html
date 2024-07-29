@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>About</h2>
+    <div class="content">
+        <p>This site is dedicated to our beloved Cooper. It was his inspiration that this page was created to help track food intake for sick and finicky cats. Unfortunately, the site was not finished in time to help Cooper, who lost his battle with cancer on 5/31/24. Hopefully, it will help other cats and cat parents better care for their fur babies.</p>
+        <img src="{{ url_for('static', filename='Cooper.jpg') }}" alt="Cooper's Picture" style="display: block; margin: 0 auto;">
+    </div>
+</div>
+{% endblock %}
